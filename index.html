@@ -296,16 +296,38 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-md-8" data-aos="fade-up" data-aos-delay="100">
-        <form>
-          <div class="mb-3"><input type="text" class="form-control" placeholder="Nama Anda" required></div>
-          <div class="mb-3"><input type="email" class="form-control" placeholder="Email Anda" required></div>
-          <div class="mb-3"><textarea class="form-control" rows="5" placeholder="Pesan Anda" required></textarea></div>
+        <form id="waForm">
+          <div class="mb-3"><input type="text" id="nama" class="form-control" placeholder="Nama Anda" required></div>
+          <div class="mb-3"><input type="email" id="email" class="form-control" placeholder="Email Anda" required></div>
+          <div class="mb-3"><textarea id="pesan" class="form-control" rows="5" placeholder="Pesan Anda" required></textarea></div>
           <button type="submit" class="btn btn-light fw-bold px-4">Kirim Pesan</button>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Script WhatsApp -->
+<script>
+  document.getElementById("waForm").addEventListener("submit", function(e){
+    e.preventDefault(); // cegah reload halaman
+
+    // Ambil data dari input
+    let nama  = document.getElementById("nama").value;
+    let email = document.getElementById("email").value;
+    let pesan = document.getElementById("pesan").value;
+
+    // Nomor tujuan WhatsApp (pakai format internasional, tanpa +)
+    let nomor = "6282318409220"; // ganti dengan nomor kamu
+
+    // Buat isi pesan
+    let text = `Halo, saya ${nama} (%20Email:%20${email})%0A%0A${pesan}`;
+
+    // Redirect ke WhatsApp
+    let url = `https://wa.me/${nomor}?text=${text}`;
+    window.open(url, "_blank");
+  });
+</script>
 
 <!-- Footer -->
 <footer class="text-center py-4">
@@ -336,3 +358,4 @@
 </script>
 </body>
 </html>
+
