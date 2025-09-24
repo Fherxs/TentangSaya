@@ -297,9 +297,18 @@
     <div class="row justify-content-center">
       <div class="col-md-8" data-aos="fade-up" data-aos-delay="100">
         <form id="waForm">
-          <div class="mb-3"><input type="text" id="nama" class="form-control" placeholder="Nama Anda" required></div>
-          <div class="mb-3"><input type="email" id="email" class="form-control" placeholder="Email Anda" required></div>
-          <div class="mb-3"><textarea id="pesan" class="form-control" rows="5" placeholder="Pesan Anda" required></textarea></div>
+          <div class="mb-3">
+            <input type="text" id="nama" class="form-control" placeholder="Nama Anda" required>
+          </div>
+          <div class="mb-3">
+            <input type="email" id="email" class="form-control" placeholder="Email Anda" required>
+          </div>
+          <div class="mb-3">
+            <input type="tel" id="telepon" class="form-control" placeholder="No. Telepon (opsional)">
+          </div>
+          <div class="mb-3">
+            <textarea id="pesan" class="form-control" rows="5" placeholder="Pesan Anda" required></textarea>
+          </div>
           <button type="submit" class="btn btn-light fw-bold px-4">Kirim Pesan</button>
         </form>
       </div>
@@ -310,36 +319,66 @@
 <!-- Script WhatsApp -->
 <script>
   document.getElementById("waForm").addEventListener("submit", function(e){
-    e.preventDefault(); // cegah reload halaman
+    e.preventDefault();
 
-    // Ambil data dari input
-    let nama  = document.getElementById("nama").value;
-    let email = document.getElementById("email").value;
-    let pesan = document.getElementById("pesan").value;
+    // ambil input
+    const nama = document.getElementById("nama").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const telepon = document.getElementById("telepon").value.trim();
+    const pesan = document.getElementById("pesan").value.trim();
 
-    // Nomor tujuan WhatsApp (pakai format internasional, tanpa +)
-    let nomor = "6282318409220"; // ganti dengan nomor kamu
+    // cek input wajib
+    if (!nama || !email || !pesan) {
+      alert("Mohon isi Nama, Email, dan Pesan.");
+      return;
+    }
 
-    // Buat isi pesan
-    let text = `Halo, saya ${nama} (%20Email:%20${email})%0A%0A${pesan}`;
+    // nomor WA pemilik (format internasional tanpa +)
+    const ownerNumber = "6282318409220"; // ganti dengan nomor kamu
 
-    // Redirect ke WhatsApp
-    let url = `https://wa.me/${nomor}?text=${text}`;
-    window.open(url, "_blank");
+    // susun isi pesan dengan format rapi
+    let text = `Halo, saya ${nama}\n`;
+    text += `Email: ${email}\n`;
+    if (telepon) text += `No. Telepon: ${telepon}\n`;
+    text += `\nPesan:\n${pesan}`;
+
+    // encode agar aman untuk URL
+    const encodedText = encodeURIComponent(text);
+
+    // buat url whatsapp
+    const waUrl = `https://wa.me/${ownerNumber}?text=${encodedText}`;
+
+    // buka whatsapp
+    window.open(waUrl, "_blank");
   });
 </script>
 
+
+
+
+
 <!-- Footer -->
-<footer class="text-center py-4">
-  <div class="container" data-aos="fade-up">
-    <p class="mb-2">&copy; 2025 FherrySatiano. All Rights Reserved.</p>
-    <div>
-      <a href="https://facebook.com" target="_blank" class="me-3"><i class="bi bi-facebook"></i></a>
-      <a href="https://instagram.com" target="_blank" class="me-3"><i class="bi bi-instagram"></i></a>
-      <a href="https://github.com" target="_blank"><i class="bi bi-github"></i></a>
+<footer class="py-4 text-center text-light" style="background:#0d6efd;">
+  <div class="container">
+    <p class="mb-3">Terhubung dengan saya di:</p>
+    <div class="d-flex justify-content-center gap-4">
+      <!-- Facebook -->
+      <a href="https://facebook.com/username" target="_blank">
+        <img src="img/face-book.png" alt="Facebook" width="40" height="40">
+      </a>
+      <!-- Instagram -->
+      <a href="https://instagram.com/username" target="_blank">
+        <img src="img/instagram.png" alt="Instagram" width="40" height="40">
+      </a>
+      <!-- GitHub -->
+      <a href="https://github.com/username" target="_blank">
+        <img src="img/github_git_icon_145985-removebg-preview.png" alt="GitHub" width="40" height="40">
+      </a>
     </div>
+    <p class="mt-3 mb-0">&copy; 2025 FherryS. All Rights Reserved.</p>
   </div>
 </footer>
+
 
 <!-- JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -358,4 +397,3 @@
 </script>
 </body>
 </html>
-
